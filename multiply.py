@@ -29,10 +29,10 @@ def multiplication_practice():
         timeout_seconds = 5
 
     while question_count < 50:
-        print(f"\nQuestion {question_count + 1} of 50")
-        print(f"Correct answers: {correct_count}")
-        print(f"Wrong answers: {wrong_count}")
-        print(f"High score: {high_score}")
+        print(f"\n{Fore.WHITE}{Style.BRIGHT}Question {question_count + 1} of 50")
+        print(f"{Fore.GREEN}{Style.BRIGHT}Correct answers: {correct_count}")
+        print(f"{Fore.RED}{Style.BRIGHT}Wrong answers: {wrong_count}")
+        print(f"{Fore.BLUE}{Style.BRIGHT}High score: {high_score}")
 
         num1 = random.randint(1, 10)
         num2 = random.randint(1, 10)
@@ -47,7 +47,7 @@ def multiplication_practice():
         timer = threading.Timer(timeout_seconds, time_up)
         timer.start()
 
-        user_answer = input(f"{Fore.YELLOW}{Style.BRIGHT}What is {num1} * {num2}? {Style.RESET_ALL}")
+        user_answer = input(f"{Fore.WHITE}{Style.BRIGHT}What is {num1} * {num2}? {Style.RESET_ALL}")
 
         timer.cancel()
 
