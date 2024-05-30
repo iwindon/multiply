@@ -60,7 +60,15 @@ def multiplication_practice():
         if user_answer.lower() == 'quit':
             break
 
-        if int(user_answer) == product:
+        try:
+            user_answer = int(user_answer)
+            if user_answer < 1 or user_answer > 100:
+                raise ValueError
+        except ValueError:
+            print("Invalid entry. Please enter a number from 1 to 100.")
+            continue
+
+        if user_answer == product:
             print("Correct!")
             correct_count += 1
         else:
