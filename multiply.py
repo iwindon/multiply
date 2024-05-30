@@ -20,13 +20,13 @@ def multiplication_practice():
         high_score = 0
 
     # Ask the user for the difficulty level
-    difficulty = input("Choose a difficulty level (easy, medium, difficult): ")
+    difficulty = input("Choose a difficulty level (easy, hard, expert) - Default is expert: ")
     if difficulty.lower() == 'easy':
-        timeout_seconds = 60
-    elif difficulty.lower() == 'medium':
         timeout_seconds = 30
+    elif difficulty.lower() == 'hard':
+        timeout_seconds = 15
     else:
-        timeout_seconds = 10
+        timeout_seconds = 5
 
     while question_count < 50:
         print(f"\nQuestion {question_count + 1} of 50")
