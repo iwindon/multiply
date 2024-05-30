@@ -5,16 +5,26 @@ from colorama import init, Fore, Style
 
 init(autoreset=True)
 
+import os
+
 def multiplication_practice():
     wrong_answers = []
     question_count = 0
     correct_count = 0
     wrong_count = 0
 
+    # Read the high score from the file
+    if os.path.exists('high_score.txt'):
+        with open('high_score.txt', 'r') as file:
+            high_score = int(file.read())
+    else:
+        high_score = 0
+
     while question_count < 50:
         print(f"\nQuestion {question_count + 1} of 50")
         print(f"Correct answers: {correct_count}")
         print(f"Wrong answers: {wrong_count}")
+        print(f"High score: {high_score}")
 
         num1 = random.randint(1, 10)
         num2 = random.randint(1, 10)
@@ -51,6 +61,11 @@ def multiplication_practice():
             wrong_count += 1
 
         question_count += 1
+
+    # Update the high score if the current score is higher
+    if correct_count > high_score:
+        with open('high_score.txt', 'w') as file:
+            file.write(str(correct_count))
 
     print("\nQuestions you got wrong:")
     for num1, num2, product in wrong_answers:
