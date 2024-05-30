@@ -1,11 +1,10 @@
 import random
 import threading
+import os
 
 from colorama import init, Fore, Style
 
 init(autoreset=True)
-
-import os
 
 def multiplication_practice():
     wrong_answers = []
@@ -19,6 +18,15 @@ def multiplication_practice():
             high_score = int(file.read())
     else:
         high_score = 0
+
+    # Ask the user for the difficulty level
+    difficulty = input("Choose a difficulty level (easy, medium, difficult): ")
+    if difficulty.lower() == 'easy':
+        timeout_seconds = 60
+    elif difficulty.lower() == 'medium':
+        timeout_seconds = 30
+    else:
+        timeout_seconds = 10
 
     while question_count < 50:
         print(f"\nQuestion {question_count + 1} of 50")
@@ -36,7 +44,7 @@ def multiplication_practice():
             print(f"The correct answer was {product}.")
             timeout[0] = True
 
-        timer = threading.Timer(10.0, time_up)
+        timer = threading.Timer(timeout_seconds, time_up)
         timer.start()
 
         user_answer = input(f"{Fore.YELLOW}{Style.BRIGHT}What is {num1} * {num2}? {Style.RESET_ALL}")
