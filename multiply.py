@@ -6,6 +6,20 @@ from colorama import init, Fore, Style
 
 init(autoreset=True)
 
+def display_times_tables():
+    while True:
+        try:
+            num = int(input(f"{Fore.WHITE}{Style.BRIGHT}Which times table would you like to see {Fore.YELLOW}{Style.BRIGHT}(1-10){Fore.WHITE}{Style.BRIGHT}? "))
+            if 1 <= num <= 10:
+                break
+            else:
+                print(f"{Fore.RED}{Style.BRIGHT}Invalid input. Please enter a number between 1 and 10.")
+        except ValueError:
+            print(f"{Fore.RED}{Style.BRIGHT}Invalid input. Please enter a number.")
+            
+    for i in range(1, 11):
+        print(f"{num} * {i} = {num * i}")
+
 def multiplication_practice():
     wrong_answers = []
     question_count = 0
@@ -88,4 +102,21 @@ def multiplication_practice():
         print(f"{num1} * {num2} = {product}")
 
 if __name__ == "__main__":
-    multiplication_practice()
+    print(f"{Fore.YELLOW}{Style.BRIGHT}Welcome to the multiplication quiz!")
+    print(f"{Fore.WHITE}{Style.BRIGHT}You will be asked 50 multiplication questions. You can quit at any time by typing 'quit'."
+          f"\nYou will have 5 to 30 seconds to answer each question based on your level you chose."
+          f"\nIf you don't answer in time, the question will be marked as wrong."
+          f"\nYou can choose the difficulty level by typing 'easy', 'hard', or 'expert'. The default is 'expert'."
+          f"\nGood luck!")
+    while True:
+        choice = input(f"{Fore.WHITE}{Style.BRIGHT}Would you like to (r)eview the times tables, (p)lay the quiz, or (q)uit? ")
+        if choice.lower() == 'r':
+            display_times_tables()
+        elif choice.lower() == 'p':
+            multiplication_practice()
+            break
+        elif choice.lower() == 'q':
+            print(f"{Fore.GREEN}{Style.BRIGHT}Goodbye!")
+            break
+        else:
+            print(f"{Fore.RED}{Style.BRIGHT}Invalid choice. Please enter 'r' to review the times tables, 'p' to play the quiz, or 'q' to quit.")

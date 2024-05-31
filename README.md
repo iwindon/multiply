@@ -13,6 +13,7 @@ Simple math quiz to drill multiplication tables
 * Once you leave the game it will show all the questions you got wrong
 * The game also records your high score which is presistent across games
 * Game has error handling to make sure only numbers from 1 to 100 can be entered
+* The game also has a review section that allows you to choose which times tables to review
 
 
 
