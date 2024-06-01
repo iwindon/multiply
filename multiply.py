@@ -72,6 +72,7 @@ def multiplication_practice():
             continue
 
         if user_answer.lower() == 'quit':
+            print(f"{Fore.GREEN}{Style.BRIGHT}Goodbye!")
             break
 
         try:
@@ -102,6 +103,7 @@ def multiplication_practice():
         print(f"{num1} * {num2} = {product}")
 
 if __name__ == "__main__":
+    os.system('cls' if os.name == 'nt' else 'clear')
     print(f"{Fore.YELLOW}{Style.BRIGHT}Welcome to the multiplication quiz!")
     print(f"{Fore.WHITE}{Style.BRIGHT}You will be asked 50 multiplication questions. You can quit at any time by typing 'quit'."
           f"\nYou will have 5 to 30 seconds to answer each question based on your level you chose."
@@ -113,6 +115,7 @@ if __name__ == "__main__":
         if choice.lower() == 'r':
             display_times_tables()
         elif choice.lower() == 'p':
+            os.system('cls' if os.name == 'nt' else 'clear')
             multiplication_practice()
             break
         elif choice.lower() == 'q':
