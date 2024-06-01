@@ -20,6 +20,9 @@ def display_times_tables():
     for i in range(1, 11):
         print(f"{num} * {i} = {num * i}")
 
+def division_practice():
+    pass
+
 def multiplication_practice():
     wrong_answers = []
     question_count = 0
