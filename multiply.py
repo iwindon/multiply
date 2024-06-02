@@ -48,9 +48,11 @@ def division_practice():
         print(f"{Fore.RED}{Style.BRIGHT}Wrong answers: {wrong_count}")
         print(f"{Fore.BLUE}{Style.BRIGHT}High score: {high_score}")
 
-        num1 = random.randint(1, 10)
-        num2 = random.randint(1, 10)
-        quotient = num1 / num2
+        num1 = random.randint(1, 100)
+        num2 = random.randint(1, 100)
+        if num2 > num1:
+            num1, num2 = num2, num1
+        quotient = round(num1 / num2, 1)
 
         timeout = [False]
         def time_up():
