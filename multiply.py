@@ -20,6 +20,16 @@ def display_times_tables():
     for i in range(1, 11):
         print(f"{num} * {i} = {num * i}")
 
+def update_score(correct_count, wrong_count, high_score, wrong_answers):
+    # Update the high score if the current score is higher
+    if correct_count > high_score:
+        with open('high_score.txt', 'w') as file:
+            file.write(str(correct_count))
+
+    print("\nQuestions you got wrong:")
+    for num1, num2, answer in wrong_answers:
+        print(f"{num1} / {num2} = {answer}")
+
 def division_practice():
     wrong_answers = []
     question_count = 0
@@ -96,14 +106,7 @@ def division_practice():
 
         question_count += 1
 
-    # Update the high score if the current score is higher
-    if correct_count > high_score:
-        with open('high_score.txt', 'w') as file:
-            file.write(str(correct_count))
-
-    print("\nQuestions you got wrong:")
-    for num1, num2, quotient in wrong_answers:
-        print(f"{num1} / {num2} = {quotient}")
+    update_score(correct_count, wrong_count, high_score, wrong_answers)
     
 
 
@@ -181,13 +184,7 @@ def multiplication_practice():
         question_count += 1
 
     # Update the high score if the current score is higher
-    if correct_count > high_score:
-        with open('high_score.txt', 'w') as file:
-            file.write(str(correct_count))
-
-    print("\nQuestions you got wrong:")
-    for num1, num2, product in wrong_answers:
-        print(f"{num1} * {num2} = {product}")
+    update_score(correct_count, wrong_count, high_score, wrong_answers)
 
 if __name__ == "__main__":
     os.system('cls' if os.name == 'nt' else 'clear')
