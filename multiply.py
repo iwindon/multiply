@@ -23,7 +23,7 @@ def display_times_tables():
     input("\nPress enter to continue...")
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def update_score(correct_count, high_score, wrong_answers):
+def update_score(correct_count, wrong_count, high_score, wrong_answers):
     # Update the high score if the current score is higher
     if correct_count > high_score:
         with open('high_score.txt', 'w') as file:
@@ -132,7 +132,7 @@ def multiplication_practice():
     # Ask the user for the difficulty level
     timeout_seconds = set_difficulty()
 
-    while question_count < 50:
+    while question_count < 5:
         print(f"\n{Fore.WHITE}{Style.BRIGHT}Question {question_count + 1} of 50")
         print(f"{Fore.GREEN}{Style.BRIGHT}Correct answers: {correct_count}")
         print(f"{Fore.RED}{Style.BRIGHT}Wrong answers: {wrong_count}")
