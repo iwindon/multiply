@@ -20,19 +20,20 @@ def display_times_tables():
     for i in range(1, 11):
         print(f"{num} * {i} = {num * i}")
 
-def division_practice():
-    wrong_answers = []
-    question_count = 0
-    correct_count = 0
-    wrong_count = 0
+    input("\nPress enter to continue...")
+    os.system('cls' if os.name == 'nt' else 'clear')
 
-    # Read the high score from the file
-    if os.path.exists('high_score.txt'):
-        with open('high_score.txt', 'r') as file:
-            high_score = int(file.read())
-    else:
-        high_score = 0
+def update_score(correct_count, high_score, wrong_answers):
+    # Update the high score if the current score is higher
+    if correct_count > high_score:
+        with open('high_score.txt', 'w') as file:
+            file.write(str(correct_count))
 
+    print("\nQuestions you got wrong:")
+    for num1, num2, answer in wrong_answers:
+        print(f"{num1} / {num2} = {answer}")
+
+def set_difficulty():
     # Ask the user for the difficulty level
     difficulty = input("Choose a difficulty level (easy, hard, expert) - Default is expert: ")
     if difficulty.lower() == 'easy':
@@ -41,6 +42,27 @@ def division_practice():
         timeout_seconds = 15
     else:
         timeout_seconds = 5
+    return timeout_seconds
+
+def get_high_score():
+    if os.path.exists('high_score.txt'):
+        with open('high_score.txt', 'r') as file:
+            high_score = int(file.read())
+    else:
+        high_score = 0
+    return high_score
+
+def division_practice():
+    wrong_answers = []
+    question_count = 0
+    correct_count = 0
+    wrong_count = 0
+
+    # Read the high score from the file
+    high_score = get_high_score()   
+
+    # Ask the user for the difficulty level
+    timeout_seconds = set_difficulty()
 
     while question_count < 50:
         print(f"\n{Fore.WHITE}{Style.BRIGHT}Question {question_count + 1} of 50")
@@ -96,16 +118,7 @@ def division_practice():
 
         question_count += 1
 
-    # Update the high score if the current score is higher
-    if correct_count > high_score:
-        with open('high_score.txt', 'w') as file:
-            file.write(str(correct_count))
-
-    print("\nQuestions you got wrong:")
-    for num1, num2, quotient in wrong_answers:
-        print(f"{num1} / {num2} = {quotient}")
-    
-
+    update_score(correct_count, wrong_count, high_score, wrong_answers)
 
 def multiplication_practice():
     wrong_answers = []
@@ -114,20 +127,10 @@ def multiplication_practice():
     wrong_count = 0
 
     # Read the high score from the file
-    if os.path.exists('high_score.txt'):
-        with open('high_score.txt', 'r') as file:
-            high_score = int(file.read())
-    else:
-        high_score = 0
+    high_score = get_high_score()
 
     # Ask the user for the difficulty level
-    difficulty = input("Choose a difficulty level (easy, hard, expert) - Default is expert: ")
-    if difficulty.lower() == 'easy':
-        timeout_seconds = 30
-    elif difficulty.lower() == 'hard':
-        timeout_seconds = 15
-    else:
-        timeout_seconds = 5
+    timeout_seconds = set_difficulty()
 
     while question_count < 50:
         print(f"\n{Fore.WHITE}{Style.BRIGHT}Question {question_count + 1} of 50")
@@ -181,13 +184,7 @@ def multiplication_practice():
         question_count += 1
 
     # Update the high score if the current score is higher
-    if correct_count > high_score:
-        with open('high_score.txt', 'w') as file:
-            file.write(str(correct_count))
-
-    print("\nQuestions you got wrong:")
-    for num1, num2, product in wrong_answers:
-        print(f"{num1} * {num2} = {product}")
+    update_score(correct_count, wrong_count, high_score, wrong_answers)
 
 if __name__ == "__main__":
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -198,7 +195,13 @@ if __name__ == "__main__":
           f"\nYou can choose the difficulty level by typing 'easy', 'hard', or 'expert'. The default is 'expert'."
           f"\nGood luck!")
     while True:
-        choice = input(f"{Fore.WHITE}{Style.BRIGHT}Would you like to (r)eview the times tables, take a (m)ultiplication quiz, a (d)ivision quiz, or (q)uit? ")
+        print(f"{Fore.WHITE}{Style.BRIGHT}Choose an option:")
+        choice = input(f"""
+        (r) Review the times tables
+        (m) Take a multiplication quiz
+        (d) Take a division quiz
+        (q) Quit
+        \nEnter your choice: """)
         if choice.lower() == 'r':
             display_times_tables()
         elif choice.lower() == 'm':
