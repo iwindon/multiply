@@ -30,6 +30,17 @@ def update_score(correct_count, wrong_count, high_score, wrong_answers):
     for num1, num2, answer in wrong_answers:
         print(f"{num1} / {num2} = {answer}")
 
+def set_difficulty():
+    # Ask the user for the difficulty level
+    difficulty = input("Choose a difficulty level (easy, hard, expert) - Default is expert: ")
+    if difficulty.lower() == 'easy':
+        timeout_seconds = 30
+    elif difficulty.lower() == 'hard':
+        timeout_seconds = 15
+    else:
+        timeout_seconds = 5
+    return timeout_seconds
+
 def division_practice():
     wrong_answers = []
     question_count = 0
@@ -44,13 +55,7 @@ def division_practice():
         high_score = 0
 
     # Ask the user for the difficulty level
-    difficulty = input("Choose a difficulty level (easy, hard, expert) - Default is expert: ")
-    if difficulty.lower() == 'easy':
-        timeout_seconds = 30
-    elif difficulty.lower() == 'hard':
-        timeout_seconds = 15
-    else:
-        timeout_seconds = 5
+    timeout_seconds = set_difficulty()
 
     while question_count < 50:
         print(f"\n{Fore.WHITE}{Style.BRIGHT}Question {question_count + 1} of 50")
@@ -124,13 +129,7 @@ def multiplication_practice():
         high_score = 0
 
     # Ask the user for the difficulty level
-    difficulty = input("Choose a difficulty level (easy, hard, expert) - Default is expert: ")
-    if difficulty.lower() == 'easy':
-        timeout_seconds = 30
-    elif difficulty.lower() == 'hard':
-        timeout_seconds = 15
-    else:
-        timeout_seconds = 5
+    timeout_seconds = set_difficulty()
 
     while question_count < 50:
         print(f"\n{Fore.WHITE}{Style.BRIGHT}Question {question_count + 1} of 50")
