@@ -41,6 +41,14 @@ def set_difficulty():
         timeout_seconds = 5
     return timeout_seconds
 
+def get_high_score():
+    if os.path.exists('high_score.txt'):
+        with open('high_score.txt', 'r') as file:
+            high_score = int(file.read())
+    else:
+        high_score = 0
+    return high_score
+
 def division_practice():
     wrong_answers = []
     question_count = 0
@@ -48,11 +56,7 @@ def division_practice():
     wrong_count = 0
 
     # Read the high score from the file
-    if os.path.exists('high_score.txt'):
-        with open('high_score.txt', 'r') as file:
-            high_score = int(file.read())
-    else:
-        high_score = 0
+    high_score = get_high_score()   
 
     # Ask the user for the difficulty level
     timeout_seconds = set_difficulty()
@@ -112,8 +116,6 @@ def division_practice():
         question_count += 1
 
     update_score(correct_count, wrong_count, high_score, wrong_answers)
-    
-
 
 def multiplication_practice():
     wrong_answers = []
@@ -122,11 +124,7 @@ def multiplication_practice():
     wrong_count = 0
 
     # Read the high score from the file
-    if os.path.exists('high_score.txt'):
-        with open('high_score.txt', 'r') as file:
-            high_score = int(file.read())
-    else:
-        high_score = 0
+    high_score = get_high_score()
 
     # Ask the user for the difficulty level
     timeout_seconds = set_difficulty()
