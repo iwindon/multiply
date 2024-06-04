@@ -20,7 +20,10 @@ def display_times_tables():
     for i in range(1, 11):
         print(f"{num} * {i} = {num * i}")
 
-def update_score(correct_count, wrong_count, high_score, wrong_answers):
+    input("\nPress enter to continue...")
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def update_score(correct_count, high_score, wrong_answers):
     # Update the high score if the current score is higher
     if correct_count > high_score:
         with open('high_score.txt', 'w') as file:
@@ -192,7 +195,13 @@ if __name__ == "__main__":
           f"\nYou can choose the difficulty level by typing 'easy', 'hard', or 'expert'. The default is 'expert'."
           f"\nGood luck!")
     while True:
-        choice = input(f"{Fore.WHITE}{Style.BRIGHT}Would you like to (r)eview the times tables, take a (m)ultiplication quiz, a (d)ivision quiz, or (q)uit? ")
+        print(f"{Fore.WHITE}{Style.BRIGHT}Choose an option:")
+        choice = input(f"""
+        (r) Review the times tables
+        (m) Take a multiplication quiz
+        (d) Take a division quiz
+        (q) Quit
+        \nEnter your choice: """)
         if choice.lower() == 'r':
             display_times_tables()
         elif choice.lower() == 'm':
