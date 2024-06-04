@@ -9,7 +9,6 @@ from colorama import init, Fore, Style
 init(autoreset=True)
 
 
-
 def display_times_tables():
     def show_table():
         num = int(num_entry.get())
@@ -22,17 +21,20 @@ def display_times_tables():
 
     root = tk.Tk()
     root.title("Times Tables")
+    root.attributes('-fullscreen', True)
 
-    num_label = tk.Label(root, text="Which times table would you like to see (1-10)?")
+    root.configure(background='black')
+
+    num_label = tk.Label(root, text="Which times table would you like to see (1-10)?", fg='white', bg='black')
     num_label.pack()
 
-    num_entry = tk.Entry(root)
+    num_entry = tk.Entry(root, fg='white', bg='black')
     num_entry.pack()
 
-    show_button = tk.Button(root, text="Show Table", command=show_table)
+    show_button = tk.Button(root, text="Show Table", command=show_table, fg='white', bg='black')
     show_button.pack()
 
-    table_text = tk.Text(root)
+    table_text = tk.Text(root, fg='white', bg='black')
     table_text.pack()
 
     root.mainloop()
