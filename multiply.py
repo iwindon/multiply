@@ -1,24 +1,41 @@
 import random
 import threading
 import os
+import tkinter as tk
+from tkinter import messagebox
 
 from colorama import init, Fore, Style
 
 init(autoreset=True)
 
+
+
 def display_times_tables():
-    while True:
-        try:
-            num = int(input(f"{Fore.WHITE}{Style.BRIGHT}Which times table would you like to see {Fore.YELLOW}{Style.BRIGHT}(1-10){Fore.WHITE}{Style.BRIGHT}? "))
-            if 1 <= num <= 10:
-                break
-            else:
-                print(f"{Fore.RED}{Style.BRIGHT}Invalid input. Please enter a number between 1 and 10.")
-        except ValueError:
-            print(f"{Fore.RED}{Style.BRIGHT}Invalid input. Please enter a number.")
-            
-    for i in range(1, 11):
-        print(f"{num} * {i} = {num * i}")
+    def show_table():
+        num = int(num_entry.get())
+        if 1 <= num <= 10:
+            table_text.delete(1.0, tk.END)
+            for i in range(1, 11):
+                table_text.insert(tk.END, f"{num} * {i} = {num * i}\n")
+        else:
+            messagebox.showinfo("Error", "Invalid input. Please enter a number between 1 and 10.")
+
+    root = tk.Tk()
+    root.title("Times Tables")
+
+    num_label = tk.Label(root, text="Which times table would you like to see (1-10)?")
+    num_label.pack()
+
+    num_entry = tk.Entry(root)
+    num_entry.pack()
+
+    show_button = tk.Button(root, text="Show Table", command=show_table)
+    show_button.pack()
+
+    table_text = tk.Text(root)
+    table_text.pack()
+
+    root.mainloop()
 
 def division_practice():
     wrong_answers = []
