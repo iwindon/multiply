@@ -1,3 +1,7 @@
+"""
+This script is a math quiz game where the user can practice multiplication and division. 
+The game includes features such as a times table review, a high score system, and adjustable difficulty levels.
+"""
 import random
 import threading
 import os
@@ -74,12 +78,14 @@ def generate_division_question():
     quotient = num1 / num2
     return num1, num2, quotient
 
+# Function for multiplication practice
 def generate_multiplication_question():
     num1 = random.randint(1, 10)
     num2 = random.randint(1, 10)
     product = num1 * num2
     return num1, num2, product
 
+# Function to generate a question and get the user's answer
 def get_user_answer(num1, num2, operation_symbol, operation, timeout_seconds):
     timeout = [False]
     def time_up():
@@ -95,6 +101,7 @@ def get_user_answer(num1, num2, operation_symbol, operation, timeout_seconds):
     timer.cancel()
     return user_answer, timeout[0]
 
+# Function to check the user's answer
 def check_answer(user_answer, correct_answer, answer_type):
     try:
         user_answer = answer_type(user_answer)
@@ -111,12 +118,15 @@ def check_answer(user_answer, correct_answer, answer_type):
         print(f"Wrong! The correct answer is {correct_answer}.")
         return False, False
 
+# Function to practice division
 def division_practice():
     practice(generate_division_question, operator.truediv, float)
 
+# Function to practice multiplication
 def multiplication_practice():
     practice(generate_multiplication_question, operator.mul, int)
 
+# Function to practice multiplication or division
 def practice(generate_question, operation, answer_type):
     # Initialize variable values
     wrong_answers = []
@@ -138,8 +148,9 @@ def practice(generate_question, operation, answer_type):
         print(f"{Fore.GREEN}{Style.BRIGHT}Correct answers: {correct_count}")
         print(f"{Fore.RED}{Style.BRIGHT}Wrong answers: {wrong_count}")
         print(f"{Fore.BLUE}{Style.BRIGHT}High score: {high_score}")
-
+        # 
         num1, num2, correct_answer = generate_question()
+        # Get the user's answer
         if operation == operator.mul:
             operation_symbol = 'x'
         elif operation == operator.truediv:
@@ -185,7 +196,6 @@ if __name__ == "__main__":
           f"\nYou can choose the difficulty level by typing 'easy', 'hard', or 'expert'. The default is 'expert'."
           f"\nGood luck!")
     # Loop until user chooses to quit
-
     while True:
         print(f"{Fore.WHITE}{Style.BRIGHT}Choose an option:")
         choice = input(f"""
