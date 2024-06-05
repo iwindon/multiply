@@ -1,5 +1,5 @@
 """
-This script is a math quiz game where the user can practice multiplication, division, and addition. 
+This script is a math quiz game where the user can practice multiplication, division, addition, and subtraction. 
 The game includes features such as a times table review, a high score system, and adjustable difficulty levels.
 """
 import random
@@ -93,6 +93,14 @@ def generate_addition_question():
     sum = num1 + num2
     return num1, num2, sum
 
+def generate_subtraction_question():
+    num1 = random.randint(1, 10)
+    num2 = random.randint(1, 10)
+    # Arrange num1 and num2 in descending order
+    num1, num2 = max(num1, num2), min(num1, num2)
+    difference = num1 - num2
+    return num1, num2, difference
+
 # Function to generate a question and get the user's answer
 def get_user_answer(num1, num2, operation_symbol, operation, timeout_seconds):
     timeout = [False]
@@ -134,8 +142,13 @@ def division_practice():
 def multiplication_practice():
     practice(generate_multiplication_question, operator.mul, int)
 
+# Function to practice addition
 def addition_practice():
     practice(generate_addition_question, operator.add, int)
+
+# Function to practice subtraction
+def subtraction_practice():
+    practice(generate_subtraction_question, operator.sub, int)
 
 # Function to practice multiplication or division
 def practice(generate_question, operation, answer_type):
@@ -168,6 +181,8 @@ def practice(generate_question, operation, answer_type):
             operation_symbol = '/'
         elif operation == operator.add:
             operation_symbol = '+'
+        elif operation == operator.sub:
+            operation_symbol = '-'
         user_answer, timeout = get_user_answer(num1, num2, operation_symbol, operation, timeout_seconds)
 
         if timeout:
@@ -216,6 +231,7 @@ if __name__ == "__main__":
         (m) Take a multiplication quiz
         (d) Take a division quiz
         (a) Take an addition quiz
+        (s) Take a subtraction quiz
         (q) Quit
         \nEnter your choice: """)
         # Check user's choice
@@ -233,8 +249,12 @@ if __name__ == "__main__":
             os.system('cls' if os.name == 'nt' else 'clear')
             practice(generate_addition_question, operator.add, int)
             break
+        elif choice.lower() == 's':
+            os.system('cls' if os.name == 'nt' else 'clear')
+            practice(generate_subtraction_question, operator.sub, int)
+            break
         elif choice.lower() == 'q':
             print(f"{Fore.GREEN}{Style.BRIGHT}Goodbye!")
             break
         else:
-            print(f"{Fore.RED}{Style.BRIGHT}Invalid choice. Please enter 'r' to review the times tables, 'm' to take a multiplication quiz, 'd' to take a division quiz, or 'q' to quit.")
+            print(f"{Fore.RED}{Style.BRIGHT}Invalid choice. Please try again.")

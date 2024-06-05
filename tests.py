@@ -32,8 +32,9 @@ class TestMultiply(unittest.TestCase):
         correct_count = 10
         wrong_count = 5
         high_score = 8
+        operation_symbol = '*'
         wrong_answers = [(2, 2, 4), (3, 3, 9)]
-        multiply.update_score(correct_count, wrong_count, high_score, wrong_answers)
+        multiply.update_score(correct_count, wrong_count, high_score, wrong_answers, operation_symbol)
         self.assertEqual(multiply.get_high_score(), 10)
 
     def test_generate_division_question(self):
