@@ -3,6 +3,8 @@ from unittest.mock import patch
 from io import StringIO
 import os
 import multiply
+# from multiply import *
+
 
 class TestMultiply(unittest.TestCase):
     @patch('builtins.input', return_value='5')
@@ -25,7 +27,31 @@ class TestMultiply(unittest.TestCase):
     def test_get_high_score(self, mock_open):
         self.assertEqual(multiply.get_high_score(), 10)
 
-    # Add more tests for division_practice, multiplication_practice, and the main program
+    def test_update_score(self):
+        # Test that the high score is updated correctly
+        correct_count = 10
+        wrong_count = 5
+        high_score = 8
+        wrong_answers = [(2, 2, 4), (3, 3, 9)]
+        multiply.update_score(correct_count, wrong_count, high_score, wrong_answers)
+        self.assertEqual(multiply.get_high_score(), 10)
+
+    def test_generate_division_question(self):
+        # Test that the division question is generated correctly
+        num1, num2, quotient = multiply.generate_division_question()
+        self.assertEqual(num1 / num2, quotient)
+
+    def test_generate_multiplication_question(self):
+        # Test that the multiplication question is generated correctly
+        num1, num2, product = multiply.generate_multiplication_question()
+        self.assertEqual(num1 * num2, product)
+
+    def test_check_answer(self):
+        # Test that the answer is checked correctly
+        self.assertEqual(multiply.check_answer(5, 5, int), (True, False))
+        self.assertEqual(multiply.check_answer(5, 4, int), (False, False))
+        self.assertEqual(multiply.check_answer('invalid', 5, int), (False, True))
+
 
 if __name__ == '__main__':
     unittest.main()
