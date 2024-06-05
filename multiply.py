@@ -230,7 +230,7 @@ if __name__ == "__main__":
         (r) Review the times tables
         (m) Take a multiplication quiz
         (d) Take a division quiz
-        (a) Take an addition quiz
+        (a) Take a addition quiz
         (s) Take a subtraction quiz
         (q) Quit
         \nEnter your choice: """)
