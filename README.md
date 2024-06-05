@@ -1,11 +1,12 @@
 # Multiply
-A math quiz game designed to help users practice multiplication and division.
+A math quiz game designed to help users practice multiplication, division, and subtraction.
 
 ## Features
 
 * Three difficulty levels: easy, hard, and expert.
 * Time-based questions to challenge your speed.
 * Randomly generates two numbers from 1 to 10 for each question.
+* Ensures subtraction questions always result in positive answers.
 * Colorized prompts and scores for a visually engaging experience.
 * Keeps track of all your wrong answers for review.
 * Displays a score at the top indicating how many questions you have answered correctly and incorrectly.
@@ -28,5 +29,3 @@ In addition to the quiz, you can also review the times tables. You can choose wh
 ## How to run
 
 To run the game, simply execute the Python script in your terminal. Make sure you have Python installed on your machine.
-
-
