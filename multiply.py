@@ -1,5 +1,5 @@
 """
-This script is a math quiz game where the user can practice multiplication and division. 
+This script is a math quiz game where the user can practice multiplication, division, and addition. 
 The game includes features such as a times table review, a high score system, and adjustable difficulty levels.
 """
 import random
@@ -36,7 +36,7 @@ def display_times_tables():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 # Function to update the score
-def update_score(correct_count, wrong_count, high_score, wrong_answers):
+def update_score(correct_count, wrong_count, high_score, wrong_answers, operation_symbol):
     # Update the high score if the current score is higher
     if correct_count > high_score:
         with open('high_score.txt', 'w') as file:
@@ -46,7 +46,7 @@ def update_score(correct_count, wrong_count, high_score, wrong_answers):
     print(f"\n{Fore.WHITE}{Style.BRIGHT}You got {correct_count} questions correct and {wrong_count} questions wrong.")
     print("\nQuestions you got wrong:")
     for num1, num2, answer in wrong_answers:
-        print(f"{num1} / {num2} = {answer}")
+        print(f"{num1} {operation_symbol} {num2} = {answer}")
 
 # Function to set the difficulty level
 def set_difficulty():
@@ -85,6 +85,13 @@ def generate_multiplication_question():
     num2 = random.randint(1, 10)
     product = num1 * num2
     return num1, num2, product
+
+# Function for addition practice
+def generate_addition_question():
+    num1 = random.randint(1, 10)
+    num2 = random.randint(1, 10)
+    sum = num1 + num2
+    return num1, num2, sum
 
 # Function to generate a question and get the user's answer
 def get_user_answer(num1, num2, operation_symbol, operation, timeout_seconds):
@@ -127,6 +134,9 @@ def division_practice():
 def multiplication_practice():
     practice(generate_multiplication_question, operator.mul, int)
 
+def addition_practice():
+    practice(generate_addition_question, operator.add, int)
+
 # Function to practice multiplication or division
 def practice(generate_question, operation, answer_type):
     # Initialize variable values
@@ -156,6 +166,8 @@ def practice(generate_question, operation, answer_type):
             operation_symbol = 'x'
         elif operation == operator.truediv:
             operation_symbol = '/'
+        elif operation == operator.add:
+            operation_symbol = '+'
         user_answer, timeout = get_user_answer(num1, num2, operation_symbol, operation, timeout_seconds)
 
         if timeout:
@@ -181,7 +193,7 @@ def practice(generate_question, operation, answer_type):
         question_count += 1
 
     # Update the score
-    update_score(correct_count, wrong_count, high_score, wrong_answers)
+    update_score(correct_count, wrong_count, high_score, wrong_answers, operation_symbol)
 
 # Main program
 if __name__ == "__main__":
@@ -203,6 +215,7 @@ if __name__ == "__main__":
         (r) Review the times tables
         (m) Take a multiplication quiz
         (d) Take a division quiz
+        (a) Take an addition quiz
         (q) Quit
         \nEnter your choice: """)
         # Check user's choice
@@ -215,6 +228,10 @@ if __name__ == "__main__":
         elif choice.lower() == 'd':
             os.system('cls' if os.name == 'nt' else 'clear')
             practice(generate_division_question, operator.truediv, float)
+            break
+        elif choice.lower() == 'a':
+            os.system('cls' if os.name == 'nt' else 'clear')
+            practice(generate_addition_question, operator.add, int)
             break
         elif choice.lower() == 'q':
             print(f"{Fore.GREEN}{Style.BRIGHT}Goodbye!")
