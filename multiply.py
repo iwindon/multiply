@@ -1,6 +1,11 @@
+"""
+This script is a math quiz game where the user can practice multiplication and division. 
+The game includes features such as a times table review, a high score system, and adjustable difficulty levels.
+"""
 import random
 import threading
 import os
+import operator
 
 from colorama import init, Fore, Style
 
@@ -38,6 +43,7 @@ def update_score(correct_count, wrong_count, high_score, wrong_answers):
             file.write(str(correct_count))
 
     # Print the questions the user got wrong
+    print(f"\n{Fore.WHITE}{Style.BRIGHT}You got {correct_count} questions correct and {wrong_count} questions wrong.")
     print("\nQuestions you got wrong:")
     for num1, num2, answer in wrong_answers:
         print(f"{num1} / {num2} = {answer}")
@@ -65,91 +71,70 @@ def get_high_score():
     return high_score
 
 # Function for division practice
-def division_practice():
-    # Initialize variable values
-    wrong_answers = []
-    question_count = 0
-    correct_count = 0
-    wrong_count = 0
-
-    # Read the high score from the file
-    high_score = get_high_score()   
-
-    # Ask the user for the difficulty level
-    timeout_seconds = set_difficulty()
-
-    # Loop for 50 questions
-    while question_count < 50:
-        # Display question and score information
-        print(f"\n{Fore.WHITE}{Style.BRIGHT}Question {question_count + 1} of 50")
-        print(f"{Fore.GREEN}{Style.BRIGHT}Correct answers: {correct_count}")
-        print(f"{Fore.RED}{Style.BRIGHT}Wrong answers: {wrong_count}")
-        print(f"{Fore.BLUE}{Style.BRIGHT}High score: {high_score}")
-
-        # Generate random numbers for the question
-        divisor = random.randint(1, 10)
-        quotient = random.randint(1, 10)
-        num1 = divisor * quotient
-        num2 = divisor
-       
-        quotient = num1 / num2
-
-        # Set up a timer for the question
-        timeout = [False]
-        def time_up():
-            print("\nTime's up!")
-            print(f"The correct answer was {quotient}.")
-            timeout[0] = True
-
-        timer = threading.Timer(timeout_seconds, time_up)
-        timer.start()
-
-        # Get the user's answer
-        user_answer = input(f"{Fore.WHITE}{Style.BRIGHT}What is {num1} / {num2}? {Style.RESET_ALL}")
-
-        timer.cancel()
-
-        # Check if the user wants to quit
-        if timeout[0]:
-            wrong_answers.append((num1, num2, quotient))
-            question_count += 1
-            wrong_count += 1
-            continue
-
-        if user_answer.lower() == 'quit':
-            print(f"{Fore.GREEN}{Style.BRIGHT}Goodbye!")
-            break
-
-        # Check if the user's answer is valid
-        try:
-            user_answer = float(user_answer)
-            if user_answer < 0 or user_answer > 10:
-                raise ValueError
-        except ValueError:
-            print("Invalid entry. Please enter a number from 0 to 10.")
-            continue
-
-        # Check if the user's answer is correct
-        if user_answer == quotient:
-            print("Correct!")
-            correct_count += 1
-        else:
-            print(f"Wrong! The correct answer is {quotient}.")
-            wrong_answers.append((num1, num2, quotient))
-            wrong_count += 1
-
-        question_count += 1
-
-    # Update the score
-    update_score(correct_count, wrong_count, high_score, wrong_answers)
+def generate_division_question():
+    divisor = random.randint(1, 10)
+    quotient = random.randint(1, 10)
+    num1 = divisor * quotient
+    num2 = divisor
+    quotient = num1 / num2
+    return num1, num2, quotient
 
 # Function for multiplication practice
+def generate_multiplication_question():
+    num1 = random.randint(1, 10)
+    num2 = random.randint(1, 10)
+    product = num1 * num2
+    return num1, num2, product
+
+# Function to generate a question and get the user's answer
+def get_user_answer(num1, num2, operation_symbol, operation, timeout_seconds):
+    timeout = [False]
+    def time_up():
+        print("\nTime's up!")
+        print(f"The correct answer was {operation(num1, num2)}.")
+        timeout[0] = True
+
+    timer = threading.Timer(timeout_seconds, time_up)
+    timer.start()
+
+    user_answer = input(f"{Fore.WHITE}{Style.BRIGHT}What is {num1} {operation_symbol} {num2}? {Style.RESET_ALL}")
+
+    timer.cancel()
+    return user_answer, timeout[0]
+
+# Function to check the user's answer
+def check_answer(user_answer, correct_answer, answer_type):
+    try:
+        user_answer = answer_type(user_answer)
+        if user_answer < 0 or user_answer > 100:
+            raise ValueError
+    except ValueError:
+        print("Invalid entry. Please enter a number from 0 to 100.")
+        return False, True
+
+    if user_answer == correct_answer:
+        print("Correct!")
+        return True, False
+    else:
+        print(f"Wrong! The correct answer is {correct_answer}.")
+        return False, False
+
+# Function to practice division
+def division_practice():
+    practice(generate_division_question, operator.truediv, float)
+
+# Function to practice multiplication
 def multiplication_practice():
+    practice(generate_multiplication_question, operator.mul, int)
+
+# Function to practice multiplication or division
+def practice(generate_question, operation, answer_type):
     # Initialize variable values
     wrong_answers = []
     question_count = 0
     correct_count = 0
     wrong_count = 0
+
 
     # Read the high score from the file
     high_score = get_high_score()
@@ -164,30 +149,17 @@ def multiplication_practice():
         print(f"{Fore.GREEN}{Style.BRIGHT}Correct answers: {correct_count}")
         print(f"{Fore.RED}{Style.BRIGHT}Wrong answers: {wrong_count}")
         print(f"{Fore.BLUE}{Style.BRIGHT}High score: {high_score}")
-
-        # Generate random numbers for the question
-        num1 = random.randint(1, 10)
-        num2 = random.randint(1, 10)
-        product = num1 * num2
-
-        # Set up a timer for the question
-        timeout = [False]
-        def time_up():
-            print("\nTime's up!")
-            print(f"The correct answer was {product}.")
-            timeout[0] = True
-
-        timer = threading.Timer(timeout_seconds, time_up)
-        timer.start()
-
+        # 
+        num1, num2, correct_answer = generate_question()
         # Get the user's answer
-        user_answer = input(f"{Fore.WHITE}{Style.BRIGHT}What is {num1} * {num2}? {Style.RESET_ALL}")
+        if operation == operator.mul:
+            operation_symbol = 'x'
+        elif operation == operator.truediv:
+            operation_symbol = '/'
+        user_answer, timeout = get_user_answer(num1, num2, operation_symbol, operation, timeout_seconds)
 
-        timer.cancel()
-
-        # Check if the user wants to quit
-        if timeout[0]:
-            wrong_answers.append((num1, num2, product))
+        if timeout:
+            wrong_answers.append((num1, num2, correct_answer))
             question_count += 1
             wrong_count += 1
             continue
@@ -196,22 +168,14 @@ def multiplication_practice():
             print(f"{Fore.GREEN}{Style.BRIGHT}Goodbye!")
             break
 
-        # Check if the user's answer is valid
-        try:
-            user_answer = int(user_answer)
-            if user_answer < 1 or user_answer > 100:
-                raise ValueError
-        except ValueError:
-            print("Invalid entry. Please enter a number from 1 to 100.")
+        correct, invalid = check_answer(user_answer, correct_answer, answer_type)
+        if invalid:
             continue
 
-        # Check if the user's answer is correct
-        if user_answer == product:
-            print("Correct!")
+        if correct:
             correct_count += 1
         else:
-            print(f"Wrong! The correct answer is {product}.")
-            wrong_answers.append((num1, num2, product))
+            wrong_answers.append((num1, num2, correct_answer))
             wrong_count += 1
 
         question_count += 1
@@ -224,7 +188,9 @@ if __name__ == "__main__":
     # Clear the console
     os.system('cls' if os.name == 'nt' else 'clear')
     # Print welcome message
-    print(f"{Fore.YELLOW}{Style.BRIGHT}Welcome to the math quiz!")
+    print(f"\n{Fore.YELLOW}{Style.BRIGHT}{'*' * 57}")
+    print(f"{Fore.YELLOW}{Style.BRIGHT}{'*' * 15} Welcome to the math quiz! {'*' * 15}")
+    print(f"{Fore.YELLOW}{Style.BRIGHT}{'*' * 57}\n")
     print(f"{Fore.WHITE}{Style.BRIGHT}You will be asked 50 questions. You can quit at any time by typing 'quit'."
           f"\nYou will have 5 to 30 seconds to answer each question based on your level you chose."
           f"\nIf you don't answer in time, the question will be marked as wrong."
@@ -244,11 +210,11 @@ if __name__ == "__main__":
             display_times_tables()
         elif choice.lower() == 'm':
             os.system('cls' if os.name == 'nt' else 'clear')
-            multiplication_practice()
+            practice(generate_multiplication_question, operator.mul, int)
             break
         elif choice.lower() == 'd':
             os.system('cls' if os.name == 'nt' else 'clear')
-            division_practice()
+            practice(generate_division_question, operator.truediv, float)
             break
         elif choice.lower() == 'q':
             print(f"{Fore.GREEN}{Style.BRIGHT}Goodbye!")
