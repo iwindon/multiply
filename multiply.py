@@ -1,5 +1,5 @@
 """
-This script is a math quiz game where the user can practice multiplication and division. 
+This script is a math quiz game where the user can practice multiplication, division, and addition. 
 The game includes features such as a times table review, a high score system, and adjustable difficulty levels.
 """
 import random
@@ -86,6 +86,7 @@ def generate_multiplication_question():
     product = num1 * num2
     return num1, num2, product
 
+# Function for addition practice
 def generate_addition_question():
     num1 = random.randint(1, 10)
     num2 = random.randint(1, 10)
