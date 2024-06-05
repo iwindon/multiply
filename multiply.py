@@ -153,7 +153,7 @@ def practice(generate_question, operation, answer_type):
     timeout_seconds = set_difficulty()
 
     # Loop for 50 questions
-    while question_count < 5:
+    while question_count < 50:
         # Display question and score information
         print(f"\n{Fore.WHITE}{Style.BRIGHT}Question {question_count + 1} of 50")
         print(f"{Fore.GREEN}{Style.BRIGHT}Correct answers: {correct_count}")
