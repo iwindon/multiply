@@ -43,6 +43,7 @@ def update_score(correct_count, wrong_count, high_score, wrong_answers):
             file.write(str(correct_count))
 
     # Print the questions the user got wrong
+    print(f"\n{Fore.WHITE}{Style.BRIGHT}You got {correct_count} questions correct and {wrong_count} questions wrong.")
     print("\nQuestions you got wrong:")
     for num1, num2, answer in wrong_answers:
         print(f"{num1} / {num2} = {answer}")
