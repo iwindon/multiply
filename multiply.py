@@ -47,6 +47,9 @@ def update_score(correct_count, wrong_count, high_score, wrong_answers, operatio
     print("\nQuestions you got wrong:")
     for num1, num2, answer in wrong_answers:
         print(f"{num1} {operation_symbol} {num2} = {answer}")
+    input("\nPress enter to continue...")
+    # Clear the console
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 # Function to set the difficulty level
 def set_difficulty():
@@ -240,19 +243,19 @@ if __name__ == "__main__":
         elif choice.lower() == 'm':
             os.system('cls' if os.name == 'nt' else 'clear')
             practice(generate_multiplication_question, operator.mul, int)
-            break
+            
         elif choice.lower() == 'd':
             os.system('cls' if os.name == 'nt' else 'clear')
             practice(generate_division_question, operator.truediv, float)
-            break
+            
         elif choice.lower() == 'a':
             os.system('cls' if os.name == 'nt' else 'clear')
             practice(generate_addition_question, operator.add, int)
-            break
+            
         elif choice.lower() == 's':
             os.system('cls' if os.name == 'nt' else 'clear')
             practice(generate_subtraction_question, operator.sub, int)
-            break
+            
         elif choice.lower() == 'q':
             print(f"{Fore.GREEN}{Style.BRIGHT}Goodbye!")
             break
