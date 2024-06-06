@@ -48,7 +48,7 @@ def update_score(correct_count, wrong_count, high_score, wrong_answers, operatio
     """
     # Update the high score if the current score is higher
     if correct_count > high_score:
-        with open('high_score.txt', 'w') as file:
+        with open('high_score.txt', 'w', encoding="utf-8") as file:
             file.write(str(correct_count))
 
     # Print the questions the user got wrong
@@ -118,8 +118,8 @@ def generate_addition_question():
     """
     num1 = random.randint(1, 10)
     num2 = random.randint(1, 10)
-    sum = num1 + num2
-    return num1, num2, sum
+    sum1 = num1 + num2
+    return num1, num2, sum1
 
 def generate_subtraction_question():
     """
@@ -206,11 +206,12 @@ def practice(generate_question, operation, answer_type):
     This function practices multiplication or division.
     """
     # Initialize variable values
-    wrong_answers = []
-    question_count = 0
-    correct_count = 0
-    wrong_count = 0
-
+    question_info = {
+        'wrong_answers': [],
+        'question_count': 0,
+        'correct_count': 0,
+        'wrong_count': 0
+    }
 
     # Read the high score from the file
     high_score = get_high_score()
@@ -219,11 +220,11 @@ def practice(generate_question, operation, answer_type):
     timeout_seconds = set_difficulty()
 
     # Loop for 50 questions
-    while question_count < 50:
+    while question_info['question_count'] < 50:
         # Display question and score information
-        print(f"\n{Fore.WHITE}{Style.BRIGHT}Question {question_count + 1} of 50")
-        print(f"{Fore.GREEN}{Style.BRIGHT}Correct answers: {correct_count}")
-        print(f"{Fore.RED}{Style.BRIGHT}Wrong answers: {wrong_count}")
+        print(f"\n{Fore.WHITE}{Style.BRIGHT}Question {question_info['question_count'] + 1} of 50")
+        print(f"{Fore.GREEN}{Style.BRIGHT}Correct answers: {question_info['correct_count']}")
+        print(f"{Fore.RED}{Style.BRIGHT}Wrong answers: {question_info['wrong_count']}")
         print(f"{Fore.BLUE}{Style.BRIGHT}High score: {high_score}")
         num1, num2, correct_answer = generate_question()
         # Get the user's answer
@@ -235,12 +236,13 @@ def practice(generate_question, operation, answer_type):
             operation_symbol = '+'
         elif operation == operator.sub:
             operation_symbol = '-'
-        user_answer, timeout = get_user_answer(num1, num2, operation_symbol, operation, timeout_seconds)
+        user_answer, timeout = get_user_answer(num1, num2, operation_symbol,
+                                               operation, timeout_seconds)
 
         if timeout:
-            wrong_answers.append((num1, num2, correct_answer))
-            question_count += 1
-            wrong_count += 1
+            question_info['wrong_answers'].append((num1, num2, correct_answer))
+            question_info['question_count'] += 1
+            question_info['wrong_count'] += 1
             continue
 
         if user_answer.lower() == 'quit':
@@ -252,15 +254,15 @@ def practice(generate_question, operation, answer_type):
             continue
 
         if correct:
-            correct_count += 1
+            question_info['correct_count'] += 1
         else:
-            wrong_answers.append((num1, num2, correct_answer))
-            wrong_count += 1
+            question_info['wrong_answers'].append((num1, num2, correct_answer))
+            question_info['wrong_count'] += 1
 
-        question_count += 1
+        question_info['question_count'] += 1
 
     # Update the score
-    update_score(correct_count, wrong_count, high_score, wrong_answers, operation_symbol)
+    update_score(question_info['correct_count'], question_info['wrong_count'], high_score, question_info['wrong_answers'], operation_symbol)
 
 # Main program
 if __name__ == "__main__":

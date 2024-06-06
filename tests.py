@@ -1,10 +1,8 @@
 """Module to test the functions in the multiply.py file."""
 import unittest
-from unittest.mock import patch
-from io import StringIO
+#from unittest.mock import patch
+#from io import StringIO
 import multiply
-
-
 
 class TestMultiply(unittest.TestCase):
     """
@@ -20,7 +18,8 @@ class TestMultiply(unittest.TestCase):
         high_score = 8
         operation_symbol = '*'
         wrong_answers = [(2, 2, 4), (3, 3, 9)]
-        multiply.update_score(correct_count, wrong_count, high_score, wrong_answers, operation_symbol)
+        multiply.update_score(correct_count, wrong_count, high_score,
+                               wrong_answers, operation_symbol)
         self.assertEqual(multiply.get_high_score(), 10)
 
     def test_generate_division_question(self):
