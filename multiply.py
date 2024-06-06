@@ -27,8 +27,7 @@ def display_times_tables():
             # Check if input is within valid range
             if 1 <= num <= 10:
                 break
-            else:
-                print(f"{Fore.RED}{Style.BRIGHT}Invalid input. Please enter a "
+            print(f"{Fore.RED}{Style.BRIGHT}Invalid input. Please enter a "
                       f"number between 1 and 10.")
         except ValueError:
             print(f"{Fore.RED}{Style.BRIGHT}Invalid input. Please enter a number.")
@@ -168,9 +167,8 @@ def check_answer(user_answer, correct_answer, answer_type):
     if user_answer == correct_answer:
         print("Correct!")
         return True, False
-    else:
-        print(f"Wrong! The correct answer is {correct_answer}.")
-        return False, False
+    print(f"Wrong! The correct answer is {correct_answer}.")
+    return False, False
 
 # Function to practice division
 def division_practice():
@@ -262,7 +260,8 @@ def practice(generate_question, operation, answer_type):
         question_info['question_count'] += 1
 
     # Update the score
-    update_score(question_info['correct_count'], question_info['wrong_count'], high_score, question_info['wrong_answers'], operation_symbol)
+    update_score(question_info['correct_count'], question_info['wrong_count'],
+                  high_score, question_info['wrong_answers'], operation_symbol)
 
 # Main program
 if __name__ == "__main__":
