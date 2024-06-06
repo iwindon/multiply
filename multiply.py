@@ -225,7 +225,6 @@ def practice(generate_question, operation, answer_type):
         print(f"{Fore.GREEN}{Style.BRIGHT}Correct answers: {correct_count}")
         print(f"{Fore.RED}{Style.BRIGHT}Wrong answers: {wrong_count}")
         print(f"{Fore.BLUE}{Style.BRIGHT}High score: {high_score}")
-        # 
         num1, num2, correct_answer = generate_question()
         # Get the user's answer
         if operation == operator.mul:
@@ -271,7 +270,8 @@ if __name__ == "__main__":
     print(f"\n{Fore.YELLOW}{Style.BRIGHT}{'*' * 57}")
     print(f"{Fore.YELLOW}{Style.BRIGHT}{'*' * 15} Welcome to the math quiz! {'*' * 15}")
     print(f"{Fore.YELLOW}{Style.BRIGHT}{'*' * 57}\n")
-    print(f"{Fore.WHITE}{Style.BRIGHT}You will be asked 50 questions. You can quit at any time by typing 'quit'."
+    print(f"{Fore.WHITE}{Style.BRIGHT}You will be asked 50 questions. "
+          f"You can quit at any time by typing 'quit'."
           f"\nYou will have 5 to 30 seconds to answer each question based on your level you chose."
           f"\nIf you don't answer in time, the question will be marked as wrong."
           f"\nYou can choose the difficulty level by typing 'easy', 'hard', or 'expert'."
@@ -294,19 +294,15 @@ if __name__ == "__main__":
         elif choice.lower() == 'm':
             os.system('cls' if os.name == 'nt' else 'clear')
             practice(generate_multiplication_question, operator.mul, int)
-            
         elif choice.lower() == 'd':
             os.system('cls' if os.name == 'nt' else 'clear')
             practice(generate_division_question, operator.truediv, float)
-            
         elif choice.lower() == 'a':
             os.system('cls' if os.name == 'nt' else 'clear')
             practice(generate_addition_question, operator.add, int)
-            
         elif choice.lower() == 's':
             os.system('cls' if os.name == 'nt' else 'clear')
             practice(generate_subtraction_question, operator.sub, int)
-            
         elif choice.lower() == 'q':
             print(f"{Fore.GREEN}{Style.BRIGHT}Goodbye!")
             break

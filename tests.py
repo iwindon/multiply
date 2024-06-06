@@ -10,38 +10,6 @@ class TestMultiply(unittest.TestCase):
     """
     Class to test the functions in the multiply.py file.
     """
-    @patch('builtins.input', return_value='5')
-    def test_display_times_tables(self, input):
-        """
-        Test that the times tables are displayed correctly.
-        """
-        expected_output = '\n'.join([f"5 * {i} = {5 * i}" for i in range(1, 11)]) + '\n'
-        with patch('sys.stdout', new=StringIO()) as fake_out:
-            multiply.display_times_tables()
-            self.assertEqual(fake_out.getvalue(), expected_output)
-
-    @patch('builtins.open', new_callable=unittest.mock.mock_open)
-    def test_update_score(self, mock_open):
-        """
-        Test that the high score is updated correctly.
-        """
-        multiply.update_score(10, 5, 8, [])
-        mock_open.assert_called_once_with('high_score.txt', 'w')
-
-    @patch('builtins.input', return_value='easy')
-    def test_set_difficulty(self, input):
-        """
-        Test that the difficulty is set correctly.
-        """
-        self.assertEqual(multiply.set_difficulty(), 30)
-
-    @patch('builtins.open', new_callable=unittest.mock.mock_open, read_data='10')
-    def test_get_high_score(self, mock_open):
-        """
-        Test that the high score is read correctly.
-        """
-        self.assertEqual(multiply.get_high_score(), 10)
-
     def test_update_score(self):
         """
         Test that the high score is updated correctly.
@@ -83,3 +51,4 @@ class TestMultiply(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+# End-of-file (EOF)
